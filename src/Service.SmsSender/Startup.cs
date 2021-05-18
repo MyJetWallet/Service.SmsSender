@@ -10,13 +10,13 @@ using MyJetWallet.Sdk.GrpcSchema;
 using MyJetWallet.Sdk.Service;
 using Prometheus;
 using ProtoBuf.Grpc.Server;
-using Service.Service.SmsSender.Grpc;
-using Service.Service.SmsSender.Modules;
-using Service.Service.SmsSender.Services;
+using Service.SmsSender.Grpc;
+using Service.SmsSender.Modules;
+using Service.SmsSender.Services;
 using SimpleTrading.BaseMetrics;
 using SimpleTrading.ServiceStatusReporterConnector;
 
-namespace Service.Service.SmsSender
+namespace Service.SmsSender
 {
     public class Startup
     {

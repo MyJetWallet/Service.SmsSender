@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Service.Service.SmsSender.Client\Service.Service.SmsSender.Client.csproj" />
-    <ProjectReference Include="..\..\src\Service.Service.SmsSender.Grpc\Service.Service.SmsSender.Grpc.csproj" />
+    <ProjectReference Include="..\..\src\Service.SmsSender.Client\Service.SmsSender.Client.csproj" />
+    <ProjectReference Include="..\..\src\Service.SmsSender.Grpc\Service.SmsSender.Grpc.csproj" />
   </ItemGroup>
 
 </Project>

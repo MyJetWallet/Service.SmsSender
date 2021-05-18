@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Service.Service.SmsSender.Domain.Models
+namespace Service.SmsSender.Domain.Models
 {
     public interface IHelloMessage
     {

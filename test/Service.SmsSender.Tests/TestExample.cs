@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace Service.Service.SmsSender.Tests
+namespace Service.SmsSender.Tests
 {
     public class TestExample
     {

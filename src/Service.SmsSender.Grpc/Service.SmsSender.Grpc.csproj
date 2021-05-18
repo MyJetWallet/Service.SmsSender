@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Service.Service.SmsSender.Domain.Models\Service.Service.SmsSender.Domain.Models.csproj" />
+    <ProjectReference Include="..\Service.SmsSender.Domain.Models\Service.SmsSender.Domain.Models.csproj" />
   </ItemGroup>
 
 </Project>

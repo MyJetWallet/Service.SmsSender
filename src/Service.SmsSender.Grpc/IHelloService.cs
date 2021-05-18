@@ -1,8 +1,8 @@
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Service.Service.SmsSender.Grpc.Models;
+using Service.SmsSender.Grpc.Models;
 
-namespace Service.Service.SmsSender.Grpc
+namespace Service.SmsSender.Grpc
 {
     [ServiceContract]
     public interface IHelloService

@@ -2,7 +2,7 @@
 using Autofac.Core;
 using Autofac.Core.Registration;
 
-namespace Service.Service.SmsSender.Modules
+namespace Service.SmsSender.Modules
 {
     public class ServiceModule: Module
     {

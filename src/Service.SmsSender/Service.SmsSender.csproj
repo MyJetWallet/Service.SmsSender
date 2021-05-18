@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>16107bcb-3925-4ada-a0e1-2f478811a14f</UserSecretsId>
+    <UserSecretsId>368aab67-652b-44c3-acc9-9799f7391838</UserSecretsId>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Service.Service.SmsSender.Grpc\Service.Service.SmsSender.Grpc.csproj" />
+    <ProjectReference Include="..\Service.SmsSender.Grpc\Service.SmsSender.Grpc.csproj" />
   </ItemGroup>
 
   <ItemGroup>

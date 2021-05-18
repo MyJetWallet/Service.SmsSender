@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using MyJetWallet.Sdk.Service;
 
-namespace Service.Service.SmsSender
+namespace Service.SmsSender
 {
     public class ApplicationLifetimeManager : ApplicationLifetimeManagerBase
     {

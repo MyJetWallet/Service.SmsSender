@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ProtoBuf.Grpc.Client;
-using Service.Service.SmsSender.Client;
-using Service.Service.SmsSender.Grpc.Models;
+using Service.SmsSender.Client;
+using Service.SmsSender.Grpc.Models;
 
 namespace TestApp
 {
@@ -16,7 +16,7 @@ namespace TestApp
             Console.ReadLine();
 
 
-            var factory = new Service.SmsSenderClientFactory("http://localhost:5001");
+            var factory = new SmsSenderClientFactory("http://localhost:5001");
             var client = factory.GetHelloService();
 
             var resp = await  client.SayHelloAsync(new HelloRequest(){Name = "Alex"});

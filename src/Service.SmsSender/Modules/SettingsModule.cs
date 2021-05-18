@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace Service.Service.SmsSender.Modules
+namespace Service.SmsSender.Modules
 {
     public class SettingsModule : Module
     {

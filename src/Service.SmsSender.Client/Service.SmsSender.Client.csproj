@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference PrivateAssets="All" Include="..\Service.Service.SmsSender.Domain.Models\Service.Service.SmsSender.Domain.Models.csproj" />
-    <ProjectReference PrivateAssets="All" Include="..\Service.Service.SmsSender.Grpc\Service.Service.SmsSender.Grpc.csproj" />
+    <ProjectReference PrivateAssets="All" Include="..\Service.SmsSender.Domain.Models\Service.SmsSender.Domain.Models.csproj" />
+    <ProjectReference PrivateAssets="All" Include="..\Service.SmsSender.Grpc\Service.SmsSender.Grpc.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,12 +23,12 @@
     <TargetsForTfmSpecificBuildOutput>
       $(TargetsForTfmSpecificBuildOutput);PackReferencedProjectOutputs
     </TargetsForTfmSpecificBuildOutput>
-    <PackageId>MyJetWallet.Service.Service.SmsSender.Client</PackageId>
+    <PackageId>MyJetWallet.Service.SmsSender.Client</PackageId>
     <Authors>MyJetWallet</Authors>
     <Company>MyJetWallet</Company>
     <Product>MyJetWallet</Product>
-    <PackageProjectUrl>https://github.com/MyJetWallet/Service.Service.SmsSender</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/MyJetWallet/Service.Service.SmsSender</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/MyJetWallet/Service.SmsSender</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MyJetWallet/Service.SmsSender</RepositoryUrl>
   </PropertyGroup>
 
   <Target Name="PackReferencedProjectOutputs" DependsOnTargets="BuildOnlySettings;ResolveReferences">

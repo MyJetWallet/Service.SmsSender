@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace Service.Service.SmsSender.Grpc.Models
+namespace Service.SmsSender.Grpc.Models
 {
     [DataContract]
     public class HelloRequest

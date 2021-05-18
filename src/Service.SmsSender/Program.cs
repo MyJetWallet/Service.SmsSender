@@ -10,7 +10,7 @@ using MyJetWallet.Sdk.Service;
 using MySettingsReader;
 using Service.Service.SmsSender.Settings;
 
-namespace Service.Service.SmsSender
+namespace Service.SmsSender
 {
     public class Program
     {
@@ -32,7 +32,7 @@ namespace Service.Service.SmsSender
 
         public static void Main(string[] args)
         {
-            Console.Title = "MyJetWallet.Service.SmsSender";
+            Console.Title = "MyJetWallet Service.SmsSender";
 
             Settings = SettingsReader.GetSettings<SettingsModel>(SettingsFileName);
 

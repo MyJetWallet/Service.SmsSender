@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
-using Service.Service.SmsSender.Domain.Models;
+using Service.SmsSender.Domain.Models;
 
-namespace Service.Service.SmsSender.Grpc.Models
+namespace Service.SmsSender.Grpc.Models
 {
     [DataContract]
     public class HelloMessage : IHelloMessage

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Service.Service.SmsSender.Grpc;
-using Service.Service.SmsSender.Grpc.Models;
-using Service.Service.SmsSender.Settings;
+using Service.SmsSender.Grpc;
+using Service.SmsSender.Grpc.Models;
 
-namespace Service.Service.SmsSender.Services
+namespace Service.SmsSender.Services
 {
     public class HelloService: IHelloService
     {
