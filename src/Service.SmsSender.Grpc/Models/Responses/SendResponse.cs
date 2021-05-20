@@ -6,10 +6,10 @@ namespace Service.SmsSender.Grpc.Models.Responses
     [DataContract]
     public class SendResponse
     {
-        [DataMember]
+        [DataMember(Order = 1)]
         public SmsSendResult Result { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 1)]
         public string ErrorMessage { get; set; }
     }
 }

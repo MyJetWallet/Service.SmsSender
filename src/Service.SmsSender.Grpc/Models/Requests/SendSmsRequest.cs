@@ -5,10 +5,10 @@ namespace Service.SmsSender.Grpc.Models.Requests
     [DataContract]
     public class SendSmsRequest
     {
-        [DataMember]
+        [DataMember(Order = 1)]
         public string Phone { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 2)]
         public string Body { get; set; }
     }
 }
