@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MyJetWallet.Sdk.Service;
 using MySettingsReader;
-using Service.Service.SmsSender.Settings;
+using Service.SmsSender.Settings;
 
 namespace Service.SmsSender
 {

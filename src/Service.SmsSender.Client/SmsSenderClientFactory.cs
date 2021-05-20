@@ -21,6 +21,12 @@ namespace Service.SmsSender.Client
             _channel = channel.Intercept(new PrometheusMetricsInterceptor());
         }
 
-        public IHelloService GetHelloService() => _channel.CreateGrpcService<IHelloService>();
+        public ISmsService GetSmsService() => _channel.CreateGrpcService<ISmsService>();
+
+        public ISmsDeliveryService GetSmsDeliveryService() => _channel.CreateGrpcService<ISmsDeliveryService>();
+
+        public ISmsProviderService GetSmsProviderService() => _channel.CreateGrpcService<ISmsProviderService>();
+
+        public ISmsTemplateService GetSmsTemplateService() => _channel.CreateGrpcService<ISmsTemplateService>();
     }
 }

@@ -10,6 +10,7 @@ using MyJetWallet.Sdk.GrpcSchema;
 using MyJetWallet.Sdk.Service;
 using Prometheus;
 using ProtoBuf.Grpc.Server;
+using Service.SmsProviderMock.Client;
 using Service.SmsSender.Grpc;
 using Service.SmsSender.Modules;
 using Service.SmsSender.Services;
@@ -29,6 +30,8 @@ namespace Service.SmsSender
             });
 
             services.AddHostedService<ApplicationLifetimeManager>();
+
+            services.AddScoped<SmsProviderMockClientFactory>();
 
             services.AddMyTelemetry(Program.Settings.ZipkinUrl);
         }
@@ -50,8 +53,10 @@ namespace Service.SmsSender
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcSchema<HelloService, IHelloService>();
-
+                endpoints.MapGrpcSchema<SmsService, ISmsService>();
+                endpoints.MapGrpcSchema<SmsProviderService, ISmsProviderService>();
+                endpoints.MapGrpcSchema<SmsTemplateService, ISmsTemplateService>();
+               
                 endpoints.MapGrpcSchemaRegistry();
 
                 endpoints.MapGet("/", async context =>
