@@ -30,18 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Service.SmsProviderMock.Client">
-      <HintPath>..\..\..\Service.SmsProviderMock\src\Service.SmsProviderMock.Client\bin\Debug\netstandard2.1\Service.SmsProviderMock.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Service.SmsProviderNexmo.Client">
-      <HintPath>..\..\..\Service.SmsProviderNexmo\src\Service.SmsProviderNexmo.Client\bin\Debug\netstandard2.1\Service.SmsProviderNexmo.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Service.SmsProviderTwilio.Client">
-      <HintPath>..\..\..\Service.SmsProviderTwilio\src\Service.SmsProviderTwilio.Client\bin\Debug\netstandard2.1\Service.SmsProviderTwilio.Client.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

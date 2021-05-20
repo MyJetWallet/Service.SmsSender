@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MyNoSqlServer.Abstractions;
-using Service.SmsProviderMock.Client;
+using Service.SmsSender.Client;
 using Service.SmsSender.Grpc;
 using Service.SmsSender.Grpc.Models.Requests;
 using Service.SmsSender.Grpc.Models.Responses;
@@ -24,7 +24,7 @@ namespace Service.SmsSender.Services
 
             foreach (var (providerName, provider) in settingsModel.SmsProviders)
             {
-                var clientFactory = new SmsProviderMockClientFactory(provider.GrpcUrl);
+                var clientFactory = new SmsSenderClientFactory(provider.GrpcUrl);
                 _serviceImplementations[providerName] = clientFactory.GetSmsDeliveryService();
             }
         }
