@@ -9,7 +9,7 @@ namespace Service.SmsSender.Grpc.Models.Responses
         [DataMember(Order = 1)]
         public SmsSendResult Result { get; set; }
 
-        [DataMember(Order = 1)]
+        [DataMember(Order = 2)]
         public string ErrorMessage { get; set; }
     }
 }
