@@ -12,7 +12,12 @@ namespace Service.SmsSender.Client
             var factory = new SmsSenderClientFactory(grpcServiceUrl);
 
             builder.RegisterInstance(factory.GetSmsService()).As<ISmsService>().SingleInstance();
-            builder.RegisterInstance(factory.GetSmsDeliveryService()).As<ISmsDeliveryService>().SingleInstance();
+        }
+
+        public static void RegisterSmsSenderAdminClients(this ContainerBuilder builder, string grpcServiceUrl)
+        {
+            var factory = new SmsSenderClientFactory(grpcServiceUrl);
+            
             builder.RegisterInstance(factory.GetSmsProviderService()).As<ISmsProviderService>().SingleInstance();
             builder.RegisterInstance(factory.GetSmsTemplateService()).As<ISmsTemplateService>().SingleInstance();
         }
