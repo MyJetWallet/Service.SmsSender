@@ -11,5 +11,8 @@ namespace Service.SmsSender.Grpc.Models.Responses
 
         [DataMember(Order = 2)]
         public string ErrorMessage { get; set; }
+
+        [DataMember(Order = 3)]
+        public string ReturnedId { get; set; }
     }
 }
