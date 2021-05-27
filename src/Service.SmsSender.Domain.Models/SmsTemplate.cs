@@ -14,7 +14,7 @@ namespace Service.SmsSender.Domain.Models
         public LangEnum DefaultLang { get; set; }
 
         [DataMember(Order = 3)]
-        public Dictionary<LangEnum, string> LangBodies { get; set; }
+        public Dictionary<string, string> LangBodies { get; set; }
 
         [DataMember(Order = 4)]
         public List<string> Params { get; set; }

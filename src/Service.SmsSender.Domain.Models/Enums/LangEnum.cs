@@ -2,7 +2,7 @@
 {
     public enum LangEnum
     {
-        En, // default
+        En,
         Ar,
         Az,
         Be,

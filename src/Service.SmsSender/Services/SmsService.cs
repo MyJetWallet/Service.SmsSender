@@ -43,12 +43,12 @@ namespace Service.SmsSender.Services
                 };
             }
 
-            if (!templateEntity.Template.LangBodies.TryGetValue(request.Lang, out var templateBody))
+            if (!templateEntity.Template.LangBodies.TryGetValue(request.Lang.ToString(), out var templateBody))
             {
                 _logger.LogInformation("Template (ID: {templateId}) for lang {lang} doesn't exist, switch to the default lang ({defaultLang}).",
                     templateEntity.Template.Id, request.Lang, templateEntity.Template.DefaultLang);
 
-                if (!templateEntity.Template.LangBodies.TryGetValue(templateEntity.Template.DefaultLang, out templateBody))
+                if (!templateEntity.Template.LangBodies.TryGetValue(templateEntity.Template.DefaultLang.ToString(), out templateBody))
                 {
                     _logger.LogError("Template (ID: {templateId}) for the default lang ({defaultLang}) doesn't exist.",
                         templateEntity.Template.Id, templateEntity.Template.DefaultLang);
@@ -87,12 +87,12 @@ namespace Service.SmsSender.Services
                 };
             }
 
-            if (!templateEntity.Template.LangBodies.TryGetValue(request.Lang, out var templateBody))
+            if (!templateEntity.Template.LangBodies.TryGetValue(request.Lang.ToString(), out var templateBody))
             {
                 _logger.LogInformation("Template (ID: {templateId}) for lang {lang} doesn't exist, switch to the default lang ({defaultLang}).",
                     templateEntity.Template.Id, request.Lang, templateEntity.Template.DefaultLang);
 
-                if (!templateEntity.Template.LangBodies.TryGetValue(templateEntity.Template.DefaultLang, out templateBody))
+                if (!templateEntity.Template.LangBodies.TryGetValue(templateEntity.Template.DefaultLang.ToString(), out templateBody))
                 {
                     _logger.LogError("Template (ID: {templateId}) for the default lang ({defaultLang}) doesn't exist.",
                         templateEntity.Template.Id, templateEntity.Template.DefaultLang);

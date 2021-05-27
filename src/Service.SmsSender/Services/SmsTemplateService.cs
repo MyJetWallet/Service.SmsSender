@@ -29,8 +29,7 @@ namespace Service.SmsSender.Services
             { TemplateEnum.TradeMade, new List<string> { "${SYMBOL}", "${PRICE}", "${VOLUME}" } }
         };
 
-        public SmsTemplateService(ILogger<SmsProviderService> logger,
-            IMyNoSqlServerDataWriter<TemplateMyNoSqlEntity> templateWriter)
+        public SmsTemplateService(ILogger<SmsProviderService> logger, IMyNoSqlServerDataWriter<TemplateMyNoSqlEntity> templateWriter)
         {
             _logger = logger;
             _templateWriter = templateWriter;
@@ -87,7 +86,7 @@ namespace Service.SmsSender.Services
                 };
             }
             
-            if (!templateEntity.Template.LangBodies.ContainsKey(request.Lang))
+            if (!templateEntity.Template.LangBodies.ContainsKey(request.Lang.ToString()))
             {
                 _logger.LogInformation("Template (ID: {templateId}) for required lang {lang} doesn't exist.",
                     templateEntity.Template.Id, request.Lang);
@@ -99,17 +98,17 @@ namespace Service.SmsSender.Services
                 };
             }
 
-            templateEntity.Template.LangBodies[request.Lang] = request.TemplateBody;
+            templateEntity.Template.LangBodies[request.Lang.ToString()] = request.TemplateBody;
 
             await _templateWriter.InsertOrReplaceAsync(templateEntity);
 
             return new SendResponse { Result = SmsSendResult.OK };
         }
 
-        private Dictionary<LangEnum, string> GetTemplateLangBodies(TemplateEnum templateId)
+        private Dictionary<string, string> GetTemplateLangBodies(TemplateEnum templateId)
         {
             var langs = Enum.GetValues(typeof(LangEnum)).Cast<LangEnum>();
-            return langs.ToDictionary(lang => lang, lang => _defaultLangTemplateBodies[templateId]);
+            return langs.ToDictionary(lang => lang.ToString(), lang => _defaultLangTemplateBodies[templateId]);
         }
 
         private List<string> GetTemplateBodyParams(TemplateEnum templateId) => _templateBodyParams[templateId];
