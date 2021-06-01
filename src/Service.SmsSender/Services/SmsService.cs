@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Threading.Tasks;
+using DotNetCoreDecorators;
 using Microsoft.Extensions.Logging;
 using MyNoSqlServer.Abstractions;
 using Service.SmsSender.Domain.Models.Enums;
@@ -63,7 +64,7 @@ namespace Service.SmsSender.Services
 
             var smsBody = templateBody
                 .Replace("${IP}", request.Ip)
-                .Replace("${DATE}", request.Date.ToString(CultureInfo.InvariantCulture));
+                .Replace("${DATE}", request.Date.UnixTimeToDateTime().ToString(CultureInfo.InvariantCulture));
 
             await _smsProviderManager.SendSmsAsync(request.Phone, smsBody);
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DotNetCoreDecorators;
 using ProtoBuf.Grpc.Client;
 using Service.SmsSender.Client;
 using Service.SmsSender.Domain.Models.Enums;
@@ -24,7 +25,7 @@ namespace TestApp
                 Phone = "+380974593496",
                 Lang = LangEnum.En,
                 Ip = "127.0.0.1",
-                Date = DateTime.Now
+                Date = DateTime.Now.UnixTime()
             });
 
             Console.WriteLine($"Status: {resp1?.Result}, Error message: {resp1?.ErrorMessage}");
