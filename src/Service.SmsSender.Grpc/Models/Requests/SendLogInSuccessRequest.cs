@@ -13,6 +13,6 @@ namespace Service.SmsSender.Grpc.Models.Requests
 
         [DataMember(Order = 3)] public string Ip { get; set; }
 
-        [DataMember(Order = 4)] public long Date { get; set; }
+        [DataMember(Order = 4)] public DateTime Date { get; set; }
     }
 }
