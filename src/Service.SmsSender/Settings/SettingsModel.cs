@@ -20,6 +20,9 @@ namespace Service.SmsSender.Settings
 
         [YamlProperty("SmsSender.ElkLogs")]
         public LogElkSettings ElkLogs { get; set; }
+        
+        [YamlProperty("SmsSender.PostgresConnectionString")]
+        public string PostgresConnectionString { get; set; }
     }
 
     public class SmsProvider

@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Service.SmsSender.Domain.Models.Enums;
 using Service.SmsSender.Grpc.Models.Responses;
+using Service.SmsSender.Postgres;
 
 namespace Service.SmsSender.Services
 {
@@ -7,6 +10,8 @@ namespace Service.SmsSender.Services
     {
         string[] GetAllProviderNames();
 
-        Task<SendSmsResponse> SendSmsAsync(string phone, string smsBody);
+        Task<SendSmsResponse> SendSmsAsync(string phone, string smsBody, TemplateEnum template);
+
+        Task<IEnumerable<SentHistoryEntity>> GetSentHistoryAsync(int count);
     }
 }

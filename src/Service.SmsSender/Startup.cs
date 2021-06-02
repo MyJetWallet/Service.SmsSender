@@ -7,11 +7,13 @@ using Microsoft.Extensions.Hosting;
 using Autofac;
 using MyJetWallet.Sdk.GrpcMetrics;
 using MyJetWallet.Sdk.GrpcSchema;
+using MyJetWallet.Sdk.Postgres;
 using MyJetWallet.Sdk.Service;
 using Prometheus;
 using ProtoBuf.Grpc.Server;
 using Service.SmsSender.Grpc;
 using Service.SmsSender.Modules;
+using Service.SmsSender.Postgres;
 using Service.SmsSender.Services;
 using SimpleTrading.BaseMetrics;
 using SimpleTrading.ServiceStatusReporterConnector;
@@ -29,6 +31,8 @@ namespace Service.SmsSender
             });
 
             services.AddHostedService<ApplicationLifetimeManager>();
+
+            services.AddDatabase(SmsSenderDbContext.Schema, Program.Settings.PostgresConnectionString, o => new SmsSenderDbContext(o));
 
             services.AddMyTelemetry(Program.Settings.ZipkinUrl);
         }

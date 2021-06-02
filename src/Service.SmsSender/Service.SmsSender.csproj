@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Service.SmsSender.Postgres\Service.SmsSender.Postgres.csproj" />
     <ProjectReference Include="..\Service.SmsSender.Client\Service.SmsSender.Client.csproj" />
     <ProjectReference Include="..\Service.SmsSender.Grpc\Service.SmsSender.Grpc.csproj" />
   </ItemGroup>

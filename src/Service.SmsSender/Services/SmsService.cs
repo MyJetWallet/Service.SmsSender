@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MyNoSqlServer.Abstractions;
+using Service.SmsSender.Domain.Models;
 using Service.SmsSender.Domain.Models.Enums;
 using Service.SmsSender.Grpc;
 using Service.SmsSender.Grpc.Enums;
@@ -65,7 +67,7 @@ namespace Service.SmsSender.Services
                 .Replace("${IP}", request.Ip)
                 .Replace("${DATE}", request.Date.ToString(CultureInfo.InvariantCulture));
 
-            await _smsProviderManager.SendSmsAsync(request.Phone, smsBody);
+            await _smsProviderManager.SendSmsAsync(request.Phone, smsBody, TemplateEnum.LogInSuccess);
 
             return new SendResponse { Result = SmsSendResult.OK };
         }
@@ -110,9 +112,15 @@ namespace Service.SmsSender.Services
                 .Replace("${PRICE}", request.Price.ToString(CultureInfo.InvariantCulture))
                 .Replace("${VOLUME}", request.Volume.ToString(CultureInfo.InvariantCulture));
 
-            await _smsProviderManager.SendSmsAsync(request.Phone, smsBody);
+            await _smsProviderManager.SendSmsAsync(request.Phone, smsBody, TemplateEnum.TradeMade);
 
             return new SendResponse { Result = SmsSendResult.OK };
+        }
+
+        public async Task<SentHistoryResponse> GetSentHistoryAsync(GetSentHistoryRequest request)
+        {
+            var records = await _smsProviderManager.GetSentHistoryAsync(request.MaxCount);
+            return new SentHistoryResponse {SentHistoryRecords = records.Select(r => r as SentHistoryRecord).ToArray()};
         }
     }
 }

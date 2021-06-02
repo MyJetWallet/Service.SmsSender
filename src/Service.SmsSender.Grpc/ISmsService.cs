@@ -13,5 +13,8 @@ namespace Service.SmsSender.Grpc
         
         [OperationContract]
         Task<SendResponse> SendTradeMadeAsync(SendTradeMadeRequest request);
+
+        [OperationContract]
+        Task<SentHistoryResponse> GetSentHistoryAsync(GetSentHistoryRequest request);
     }
 }
