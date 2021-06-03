@@ -9,7 +9,6 @@ using Service.SmsSender.Postgres;
 
 namespace Service.SmsSender.Postgres.Migrations
 {
-{
     [DbContext(typeof(SmsSenderDbContext))]
     [Migration("20210306104651_ver_0")]
     partial class ver_0
