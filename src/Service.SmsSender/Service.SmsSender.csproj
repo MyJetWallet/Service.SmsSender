@@ -10,6 +10,10 @@
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.37.0" />
     <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="MyJetWallet.Sdk.GrpcMetrics" Version="2.0.0" />
@@ -25,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Service.SmsSender.Postgres\Service.SmsSender.Postgres.csproj" />
+    <ProjectReference Include="..\Service.SmsSender.Postgres\Service.SmsSender.Postgres.csproj" />
     <ProjectReference Include="..\Service.SmsSender.Client\Service.SmsSender.Client.csproj" />
     <ProjectReference Include="..\Service.SmsSender.Grpc\Service.SmsSender.Grpc.csproj" />
   </ItemGroup>

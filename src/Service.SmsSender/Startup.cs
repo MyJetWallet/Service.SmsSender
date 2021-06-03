@@ -32,6 +32,7 @@ namespace Service.SmsSender
 
             services.AddHostedService<ApplicationLifetimeManager>();
 
+            SmsSenderDbContext.LoggerFactory = Program.LogFactory;
             services.AddDatabase(SmsSenderDbContext.Schema, Program.Settings.PostgresConnectionString, o => new SmsSenderDbContext(o));
 
             services.AddMyTelemetry(Program.Settings.ZipkinUrl);

@@ -21,7 +21,10 @@ namespace Service.SmsSender.Postgres
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLoggerFactory(LoggerFactory).EnableSensitiveDataLogging();
+            if (LoggerFactory != null)
+            {
+                optionsBuilder.UseLoggerFactory(LoggerFactory).EnableSensitiveDataLogging();
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,7 +34,6 @@ namespace Service.SmsSender.Postgres
             modelBuilder.Entity<SentHistoryEntity>().ToTable(SentHistoryTableName);
             modelBuilder.Entity<SentHistoryEntity>().Property(e => e.Id).UseIdentityColumn();
             modelBuilder.Entity<SentHistoryEntity>().HasKey(e => e.Id);
-            modelBuilder.Entity<SentHistoryEntity>().HasIndex(e => e.Id).IsUnique();
             
             modelBuilder.Entity<SentHistoryEntity>().Property(e => e.MaskedPhone).HasMaxLength(32);
             modelBuilder.Entity<SentHistoryEntity>().Property(e => e.Template).HasMaxLength(64);

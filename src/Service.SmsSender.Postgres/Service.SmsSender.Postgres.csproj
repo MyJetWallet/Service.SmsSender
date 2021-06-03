@@ -13,12 +13,16 @@
 	  <PrivateAssets>all</PrivateAssets>
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.6">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
 	<PackageReference Include="MyJetWallet.Sdk.Postgres" Version="1.2.0" />
 	<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Service.SmsSender.Domain.Models\Service.SmsSender.Domain.Models.csproj" />
+    <ProjectReference Include="..\Service.SmsSender.Domain.Models\Service.SmsSender.Domain.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,6 @@ namespace Service.SmsSender.Postgres.DesignTime
     {
         public ContextFactory() : base(options => new SmsSenderDbContext(options))
         {
-
         }
     }
 }
