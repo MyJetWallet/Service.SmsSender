@@ -10,7 +10,7 @@ namespace Service.SmsSender.Services
     {
         string[] GetAllProviderNames();
 
-        Task<SendSmsResponse> SendSmsAsync(string phone, string smsBody, TemplateEnum template);
+        Task<SendSmsResponse> SendSmsAsync(string phone, string brand, string smsBody, TemplateEnum template);
 
         Task<IEnumerable<SentHistoryEntity>> GetSentHistoryAsync(int count);
     }

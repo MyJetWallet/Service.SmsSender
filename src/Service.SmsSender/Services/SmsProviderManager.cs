@@ -44,7 +44,7 @@ namespace Service.SmsSender.Services
 
         public string[] GetAllProviderNames() => Program.Settings.SmsProviders.Select(p => p.Key).ToArray();
 
-        public async Task<SendSmsResponse> SendSmsAsync(string phone, string smsBody, TemplateEnum template)
+        public async Task<SendSmsResponse> SendSmsAsync(string phone, string brand, string smsBody, TemplateEnum template)
         {
             var providerName = await SelectProviderByPhone(phone);
             var provider = GetProviderByName(providerName);
@@ -58,7 +58,7 @@ namespace Service.SmsSender.Services
                     Body = smsBody
                 };
 
-                var record = new SentHistoryRecord(phone, template, providerName, DateTime.Now);
+                var record = new SentHistoryRecord(phone, brand, template, providerName, DateTime.Now);
 
                 response = await provider.SendSmsAsync(request);
 

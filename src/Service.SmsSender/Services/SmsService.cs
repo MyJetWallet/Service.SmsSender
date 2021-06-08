@@ -67,7 +67,7 @@ namespace Service.SmsSender.Services
                 .Replace("${IP}", request.Ip)
                 .Replace("${DATE}", request.Date.ToString(CultureInfo.InvariantCulture));
 
-            await _smsProviderManager.SendSmsAsync(request.Phone, smsBody, TemplateEnum.LogInSuccess);
+            await _smsProviderManager.SendSmsAsync(request.Phone, request.Brand, smsBody, TemplateEnum.LogInSuccess);
 
             return new SendResponse { Result = SmsSendResult.OK };
         }
@@ -112,7 +112,7 @@ namespace Service.SmsSender.Services
                 .Replace("${PRICE}", request.Price.ToString(CultureInfo.InvariantCulture))
                 .Replace("${VOLUME}", request.Volume.ToString(CultureInfo.InvariantCulture));
 
-            await _smsProviderManager.SendSmsAsync(request.Phone, smsBody, TemplateEnum.TradeMade);
+            await _smsProviderManager.SendSmsAsync(request.Phone, request.Brand, smsBody, TemplateEnum.TradeMade);
 
             return new SendResponse { Result = SmsSendResult.OK };
         }

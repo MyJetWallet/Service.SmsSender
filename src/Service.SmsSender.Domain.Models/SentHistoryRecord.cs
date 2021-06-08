@@ -7,9 +7,10 @@ namespace Service.SmsSender.Domain.Models
     [DataContract]
     public class SentHistoryRecord
     {
-        public SentHistoryRecord(string phone, string template, string provider, DateTime procDate, string? procError = null, string? clientId = null)
+        public SentHistoryRecord(string phone, string brand, string template, string provider, DateTime procDate, string? procError = null, string? clientId = null)
         {
             MaskedPhone = phone.Substring(0, Convert.ToInt32(Math.Ceiling(phone.Length / 2m)));
+            Brand = brand;
             Template = template;
             Provider = provider;
             ProcDate = procDate;
@@ -17,27 +18,30 @@ namespace Service.SmsSender.Domain.Models
             ClientId = clientId;
         }
 
-        public SentHistoryRecord(string phone, TemplateEnum template, string provider, DateTime procDate, string? procError = null, string? clientId = null)
-            : this(phone, template.ToString(), provider, procDate, procError, clientId)
+        public SentHistoryRecord(string phone, string brand, TemplateEnum template, string provider, DateTime procDate, string? procError = null, string? clientId = null)
+            : this(phone, brand, template.ToString(), provider, procDate, procError, clientId)
         {
         }
 
         [DataMember(Order = 1)]
         public string MaskedPhone { get; set; }
 
-        [DataMember(Order = 2)]
-        public string Template { get; set; }
-
         [DataMember(Order = 3)]
-        public string Provider { get; set; }
+        public string Brand { get; set; }
 
         [DataMember(Order = 4)]
-        public DateTime ProcDate { get; set; }
+        public string Template { get; set; }
 
         [DataMember(Order = 5)]
-        public string? ProcError { get; set; }
+        public string Provider { get; set; }
 
         [DataMember(Order = 6)]
+        public DateTime ProcDate { get; set; }
+
+        [DataMember(Order = 7)]
+        public string? ProcError { get; set; }
+
+        [DataMember(Order = 8)]
         public string? ClientId { get; set; }
     }
 }
