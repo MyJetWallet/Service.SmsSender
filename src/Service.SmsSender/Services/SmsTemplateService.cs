@@ -85,8 +85,9 @@ namespace Service.SmsSender.Services
                     ErrorMessage = "Template doesn't exist."
                 };
             }
-            
-            if (!templateEntity.Template.BrandLangBodies.ContainsKey(request.Brand))
+
+            var brandLangBodies = templateEntity.Template.BrandLangBodies.FirstOrDefault(b => b.Brand == request.Brand);
+            if (brandLangBodies == null)
             {
                 _logger.LogInformation("Template (ID: {templateId}) for required brand {brand} doesn't exist.",
                     templateEntity.Template.Id, request.Brand);
@@ -98,10 +99,9 @@ namespace Service.SmsSender.Services
                 };
             }
 
-            var brandLangBodies = templateEntity.Template.BrandLangBodies[request.Brand];
             var lang = request.Lang.ToString();
 
-            if (!brandLangBodies.ContainsKey(lang))
+            if (!brandLangBodies.LangBodies.ContainsKey(lang))
             {
                 _logger.LogInformation("Template (ID: {templateId}) for required lang {lang} doesn't exist.",
                     templateEntity.Template.Id, request.Lang);
@@ -113,19 +113,23 @@ namespace Service.SmsSender.Services
                 };
             }
 
-            brandLangBodies[lang] = request.TemplateBody;
+            brandLangBodies.LangBodies[lang] = request.TemplateBody;
 
             await _templateWriter.InsertOrReplaceAsync(templateEntity);
 
             return new SendResponse { Result = SmsSendResult.OK };
         }
 
-        private Dictionary<string, Dictionary<string, string>> GetTemplateLangBodies(TemplateEnum templateId)
+        private BrandLangBody[] GetTemplateLangBodies(TemplateEnum templateId)
         {
             var langs = Enum.GetValues(typeof(LangEnum)).Cast<LangEnum>();
-            return new Dictionary<string, Dictionary<string, string>>
-            {
-                { "DefaultBrand", langs.ToDictionary(lang => lang.ToString(), lang => _defaultBrandLangBodies[templateId])}
+
+            return new[] {
+                new BrandLangBody
+                {
+                    Brand = "DefaultBrand",
+                    LangBodies = langs.ToDictionary(lang => lang.ToString(), lang => _defaultBrandLangBodies[templateId])
+                }
             };
         }
 
