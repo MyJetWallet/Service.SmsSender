@@ -22,6 +22,7 @@ namespace TestApp
             var resp1 = await  client.SendLogInSuccessAsync(new SendLogInSuccessRequest
             {
                 Phone = "+380974593496",
+                Brand = "BlahBlahBrand",
                 Lang = LangEnum.En,
                 Ip = "127.0.0.1",
                 Date = DateTime.Now
@@ -32,6 +33,7 @@ namespace TestApp
             var resp2 = await client.SendTradeMadeAsync(new SendTradeMadeRequest
             {
                 Phone = "+380974593496",
+                Brand = "BlahBlahBrand",
                 Lang = LangEnum.En,
                 Symbol = "BTC/USD",
                 Volume = 1,

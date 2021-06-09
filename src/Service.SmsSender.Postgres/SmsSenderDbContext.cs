@@ -36,6 +36,7 @@ namespace Service.SmsSender.Postgres
             modelBuilder.Entity<SentHistoryEntity>().HasKey(e => e.Id);
             
             modelBuilder.Entity<SentHistoryEntity>().Property(e => e.MaskedPhone).HasMaxLength(32);
+            modelBuilder.Entity<SentHistoryEntity>().Property(e => e.Brand).HasMaxLength(64);
             modelBuilder.Entity<SentHistoryEntity>().Property(e => e.Template).HasMaxLength(64);
             modelBuilder.Entity<SentHistoryEntity>().Property(e => e.Provider).HasMaxLength(64);
             modelBuilder.Entity<SentHistoryEntity>().Property(e => e.ProcDate);

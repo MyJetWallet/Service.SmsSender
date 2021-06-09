@@ -28,8 +28,12 @@ namespace Service.SmsSender.Postgres.Migrations
                     .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                 b.Property<string>("MaskedPhone")
-                    .HasMaxLength(128)
-                    .HasColumnType("character varying(128)");
+                    .HasMaxLength(32)
+                    .HasColumnType("character varying(32)");
+
+                b.Property<string>("Brand")
+                    .HasMaxLength(64)
+                    .HasColumnType("character varying(64)");
 
                 b.Property<string>("Template")
                     .HasMaxLength(64)

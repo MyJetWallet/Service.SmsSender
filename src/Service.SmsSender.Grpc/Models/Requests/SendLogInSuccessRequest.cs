@@ -5,7 +5,7 @@ using Service.SmsSender.Domain.Models.Enums;
 namespace Service.SmsSender.Grpc.Models.Requests
 {
     [DataContract]
-    public class SendLogInSuccessRequest
+    public class SendLogInSuccessRequest : ISendMessageRequest
     {
         [DataMember(Order = 1)] public string Phone { get; set; }
 

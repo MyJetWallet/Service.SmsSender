@@ -18,7 +18,7 @@ namespace Service.SmsSender.Services
     {
         private readonly ILogger<SmsProviderService> _logger;
         private readonly IMyNoSqlServerDataWriter<TemplateMyNoSqlEntity> _templateWriter;
-        private readonly IDictionary<TemplateEnum, string> _defaultLangTemplateBodies = new Dictionary<TemplateEnum, string>
+        private readonly IDictionary<TemplateEnum, string> _defaultBrandLangBodies = new Dictionary<TemplateEnum, string>
         {
             { TemplateEnum.LogInSuccess, "Successful log in account from IP ${IP} (${DATE})" },
             { TemplateEnum.TradeMade, "Trade made: ${SYMBOL}, price ${PRICE}, volume ${VOLUME}" }
@@ -50,7 +50,7 @@ namespace Service.SmsSender.Services
                     {
                         Id = templateId,
                         DefaultLang = LangEnum.En,
-                        LangBodies = GetTemplateLangBodies(templateId),
+                        BrandLangBodies = GetTemplateLangBodies(templateId),
                         Params = GetTemplateBodyParams(templateId)
                     };
 
@@ -86,7 +86,22 @@ namespace Service.SmsSender.Services
                 };
             }
             
-            if (!templateEntity.Template.LangBodies.ContainsKey(request.Lang.ToString()))
+            if (!templateEntity.Template.BrandLangBodies.ContainsKey(request.Brand))
+            {
+                _logger.LogInformation("Template (ID: {templateId}) for required brand {brand} doesn't exist.",
+                    templateEntity.Template.Id, request.Brand);
+
+                return new SendResponse
+                {
+                    Result = SmsSendResult.TEMPLATE_NOT_FOUND,
+                    ErrorMessage = "Template doesn't exist for required brand."
+                };
+            }
+
+            var brandLangBodies = templateEntity.Template.BrandLangBodies[request.Brand];
+            var lang = request.Lang.ToString();
+
+            if (!brandLangBodies.ContainsKey(lang))
             {
                 _logger.LogInformation("Template (ID: {templateId}) for required lang {lang} doesn't exist.",
                     templateEntity.Template.Id, request.Lang);
@@ -98,17 +113,20 @@ namespace Service.SmsSender.Services
                 };
             }
 
-            templateEntity.Template.LangBodies[request.Lang.ToString()] = request.TemplateBody;
+            brandLangBodies[lang] = request.TemplateBody;
 
             await _templateWriter.InsertOrReplaceAsync(templateEntity);
 
             return new SendResponse { Result = SmsSendResult.OK };
         }
 
-        private Dictionary<string, string> GetTemplateLangBodies(TemplateEnum templateId)
+        private Dictionary<string, Dictionary<string, string>> GetTemplateLangBodies(TemplateEnum templateId)
         {
             var langs = Enum.GetValues(typeof(LangEnum)).Cast<LangEnum>();
-            return langs.ToDictionary(lang => lang.ToString(), lang => _defaultLangTemplateBodies[templateId]);
+            return new Dictionary<string, Dictionary<string, string>>
+            {
+                { "DefaultBrand", langs.ToDictionary(lang => lang.ToString(), lang => _defaultBrandLangBodies[templateId])}
+            };
         }
 
         private List<string> GetTemplateBodyParams(TemplateEnum templateId) => _templateBodyParams[templateId];

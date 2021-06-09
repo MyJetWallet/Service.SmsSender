@@ -11,13 +11,13 @@ namespace Service.SmsSender.Domain.Models
         public TemplateEnum Id { get; set; }
 
         [DataMember(Order = 2)]
-        public string Brand { get; set; }
-
-        [DataMember(Order = 3)]
         public LangEnum DefaultLang { get; set; }
 
+        [DataMember(Order = 3)]
+        public string DefaultBrand { get; set; }
+
         [DataMember(Order = 4)]
-        public Dictionary<string, string> LangBodies { get; set; }
+        public Dictionary<string, Dictionary<string, string>> BrandLangBodies { get; set; }
 
         [DataMember(Order = 5)]
         public List<string> Params { get; set; }

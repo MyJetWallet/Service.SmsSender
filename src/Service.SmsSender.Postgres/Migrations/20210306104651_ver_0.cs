@@ -19,6 +19,7 @@ namespace Service.SmsSender.Postgres.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MaskedPhone = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
+                    Brand = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     Template = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     Provider = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     ProcDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
