@@ -87,33 +87,33 @@ namespace Service.SmsSender.Services
                 };
             }
 
+            var lang = request.Lang.ToString();
             var brandLangBodies = templateEntity.Template.BrandLangBodies.FirstOrDefault(b => b.Brand == request.Brand);
             if (brandLangBodies == null)
             {
-                _logger.LogInformation("Template (ID: {templateId}) for required brand {brand} doesn't exist.",
+                _logger.LogInformation("Template (ID: {templateId}) for required brand {brand} doesn't exist, creating new one.",
                     templateEntity.Template.Id, request.Brand);
 
-                return new SendResponse
+                templateEntity.Template.BrandLangBodies = templateEntity.Template.BrandLangBodies.Append(new BrandLangBody
                 {
-                    Result = SmsSendResult.TEMPLATE_NOT_FOUND,
-                    ErrorMessage = "Template doesn't exist for required brand."
-                };
+                    Brand = request.Brand,
+                    LangBodies = new Dictionary<string, string>
+                    {
+                        { lang, request.TemplateBody }
+                    }
+                }).ToArray();
             }
-
-            var lang = request.Lang.ToString();
-
-            if (!brandLangBodies.LangBodies.ContainsKey(lang))
+            else
             {
-                _logger.LogInformation("Template (ID: {templateId}) for required lang {lang} doesn't exist.",
-                    templateEntity.Template.Id, request.Lang);
-
-                return new SendResponse
+                if (!brandLangBodies.LangBodies.ContainsKey(lang))
                 {
-                    Result = SmsSendResult.TEMPLATE_NOT_FOUND,
-                    ErrorMessage = "Template doesn't exist for required lang."
-                };
-            }
+                    _logger.LogInformation("Template (ID: {templateId}) for brand {brand} with required lang {lang} doesn't exist, creating new one.",
+                        templateEntity.Template.Id, request.Brand, request.Lang);
 
+                    brandLangBodies.LangBodies.Add(lang, request.TemplateBody);
+                }
+            }
+            
             if (!string.IsNullOrEmpty(request.DefaultBrand))
             {
                 templateEntity.Template.DefaultBrand = request.DefaultBrand;
@@ -121,8 +121,6 @@ namespace Service.SmsSender.Services
 
             templateEntity.Template.DefaultLang = request.DefaultLang;
             
-            brandLangBodies.LangBodies[lang] = request.TemplateBody;
-
             await _templateWriter.InsertOrReplaceAsync(templateEntity);
 
             return new SendResponse { Result = SmsSendResult.OK };

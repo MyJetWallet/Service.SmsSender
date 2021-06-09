@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Service.SmsSender.Domain.Models.Enums;
 
@@ -17,7 +18,7 @@ namespace Service.SmsSender.Domain.Models
         public string DefaultBrand { get; set; }
 
         [DataMember(Order = 4)]
-        public BrandLangBody[] BrandLangBodies { get; set; }
+        public BrandLangBody[] BrandLangBodies { get; set; } = Array.Empty<BrandLangBody>();
 
         [DataMember(Order = 5)]
         public List<string> Params { get; set; }
