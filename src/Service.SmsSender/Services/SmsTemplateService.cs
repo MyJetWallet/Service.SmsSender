@@ -50,6 +50,7 @@ namespace Service.SmsSender.Services
                     {
                         Id = templateId,
                         DefaultLang = LangEnum.En,
+                        DefaultBrand = "DefaultBrand",
                         BrandLangBodies = GetTemplateLangBodies(templateId),
                         Params = GetTemplateBodyParams(templateId)
                     };
@@ -113,6 +114,13 @@ namespace Service.SmsSender.Services
                 };
             }
 
+            if (!string.IsNullOrEmpty(request.DefaultBrand))
+            {
+                templateEntity.Template.DefaultBrand = request.DefaultBrand;
+            }
+
+            templateEntity.Template.DefaultLang = request.DefaultLang;
+            
             brandLangBodies.LangBodies[lang] = request.TemplateBody;
 
             await _templateWriter.InsertOrReplaceAsync(templateEntity);
