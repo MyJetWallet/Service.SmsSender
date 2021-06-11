@@ -29,7 +29,7 @@
     <Product>MyJetWallet</Product>
     <PackageProjectUrl>https://github.com/MyJetWallet/Service.SmsSender</PackageProjectUrl>
     <RepositoryUrl>https://github.com/MyJetWallet/Service.SmsSender</RepositoryUrl>
-    <Version>1.1.11</Version>
+    <Version>1.1.13</Version>
   </PropertyGroup>
 
   <Target Name="PackReferencedProjectOutputs" DependsOnTargets="BuildOnlySettings;ResolveReferences">

@@ -111,7 +111,6 @@ namespace Service.SmsSender.Services
                     }
                 }
             }
-            
 
             var lang = request.Lang.ToString();
             var brandLangBodies = templateEntity.Template.BrandLangBodies.FirstOrDefault(b => b.Brand == request.Brand);

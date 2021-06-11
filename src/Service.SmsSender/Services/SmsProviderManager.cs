@@ -87,7 +87,9 @@ namespace Service.SmsSender.Services
             try
             {
                 await using var context = new SmsSenderDbContext(_dbContextOptionsBuilder.Options);
-                return context.SentHistory.AsEnumerable().Where(s => s.Id < since).TakeLast(count);
+                return since > 0
+                    ? context.SentHistory.AsEnumerable().Where(s => s.Id < since).TakeLast(count)
+                    : context.SentHistory.AsEnumerable().TakeLast(count);
             }
             catch (Exception e)
             {
