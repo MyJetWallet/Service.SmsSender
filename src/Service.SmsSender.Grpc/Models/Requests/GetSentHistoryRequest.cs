@@ -7,5 +7,8 @@ namespace Service.SmsSender.Grpc.Models.Requests
     {
         [DataMember(Order = 1)]
         public int MaxCount { get; set; }
+
+        [DataMember(Order = 2)]
+        public int Since { get; set; }
     }
 }

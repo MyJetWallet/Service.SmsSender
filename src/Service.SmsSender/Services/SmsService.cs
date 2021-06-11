@@ -73,7 +73,7 @@ namespace Service.SmsSender.Services
 
         public async Task<SentHistoryResponse> GetSentHistoryAsync(GetSentHistoryRequest request)
         {
-            var records = await _smsProviderManager.GetSentHistoryAsync(request.MaxCount);
+            var records = await _smsProviderManager.GetSentHistoryAsync(request.MaxCount, request.Since);
             return new SentHistoryResponse {SentHistoryRecords = records.Select(r => r as SentHistoryRecord).ToArray()};
         }
 

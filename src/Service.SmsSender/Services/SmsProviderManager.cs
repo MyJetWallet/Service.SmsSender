@@ -82,12 +82,12 @@ namespace Service.SmsSender.Services
             return response;
         }
 
-        public async Task<IEnumerable<SentHistoryEntity>> GetSentHistoryAsync(int count)
+        public async Task<IEnumerable<SentHistoryEntity>> GetSentHistoryAsync(int count, int since)
         {
             try
             {
                 await using var context = new SmsSenderDbContext(_dbContextOptionsBuilder.Options);
-                return context.SentHistory.AsEnumerable().TakeLast(count);
+                return context.SentHistory.AsEnumerable().Where(s => s.Id < since).TakeLast(count);
             }
             catch (Exception e)
             {

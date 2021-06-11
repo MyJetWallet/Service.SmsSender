@@ -12,6 +12,6 @@ namespace Service.SmsSender.Services
 
         Task<SendSmsResponse> SendSmsAsync(string phone, string brand, string smsBody, TemplateEnum template);
 
-        Task<IEnumerable<SentHistoryEntity>> GetSentHistoryAsync(int count);
+        Task<IEnumerable<SentHistoryEntity>> GetSentHistoryAsync(int count, int since);
     }
 }

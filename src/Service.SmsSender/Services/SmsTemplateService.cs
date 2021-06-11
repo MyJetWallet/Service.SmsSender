@@ -87,6 +87,32 @@ namespace Service.SmsSender.Services
                 };
             }
 
+            if (string.IsNullOrEmpty(request.TemplateBody))
+            {
+                var blb = templateEntity.Template.BrandLangBodies.FirstOrDefault(b => b.Brand == request.Brand);
+                if (blb != null)
+                {
+                    var lng = request.Lang.ToString();
+                    if (blb.LangBodies.ContainsKey(lng))
+                    {
+                        blb.LangBodies.Remove(lng);
+
+                        _logger.LogInformation("Lang body with lang {lang} has been removed from brand ({brand}).", request.Lang, request.Brand);
+
+                        if (!blb.LangBodies.Any())
+                        {
+                            templateEntity.Template.BrandLangBodies = templateEntity.Template.BrandLangBodies
+                                .Where(b => b.Brand != blb.Brand).ToArray();
+
+                            _logger.LogInformation("Brand ({brand}) removed because it no longer has lang bodies.", request.Brand);
+                        }
+
+                        return new SendResponse { Result = SmsSendResult.OK };
+                    }
+                }
+            }
+            
+
             var lang = request.Lang.ToString();
             var brandLangBodies = templateEntity.Template.BrandLangBodies.FirstOrDefault(b => b.Brand == request.Brand);
             if (brandLangBodies == null)
@@ -120,7 +146,7 @@ namespace Service.SmsSender.Services
             }
 
             templateEntity.Template.DefaultLang = request.DefaultLang;
-            
+
             await _templateWriter.InsertOrReplaceAsync(templateEntity);
 
             return new SendResponse { Result = SmsSendResult.OK };
