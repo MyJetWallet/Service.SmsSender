@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Service.SmsSender.Domain.Models;
 
 namespace Service.SmsSender.Postgres
 {
@@ -11,7 +12,7 @@ namespace Service.SmsSender.Postgres
 
         public const string SentHistoryTableName = "sent_history";
 
-        public DbSet<SentHistoryEntity> SentHistory { get; set; }
+        public DbSet<SentHistoryRecord> SentHistory { get; set; }
 
         public static ILoggerFactory LoggerFactory { get; set; }
 
@@ -31,22 +32,22 @@ namespace Service.SmsSender.Postgres
         {
             modelBuilder.HasDefaultSchema(Schema);
 
-            modelBuilder.Entity<SentHistoryEntity>().ToTable(SentHistoryTableName);
-            modelBuilder.Entity<SentHistoryEntity>().Property(e => e.Id).UseIdentityColumn();
-            modelBuilder.Entity<SentHistoryEntity>().HasKey(e => e.Id);
+            modelBuilder.Entity<SentHistoryRecord>().ToTable(SentHistoryTableName);
+            modelBuilder.Entity<SentHistoryRecord>().Property(e => e.Id).UseIdentityColumn();
+            modelBuilder.Entity<SentHistoryRecord>().HasKey(e => e.Id);
             
-            modelBuilder.Entity<SentHistoryEntity>().Property(e => e.MaskedPhone).HasMaxLength(32);
-            modelBuilder.Entity<SentHistoryEntity>().Property(e => e.Brand).HasMaxLength(64);
-            modelBuilder.Entity<SentHistoryEntity>().Property(e => e.Template).HasMaxLength(64);
-            modelBuilder.Entity<SentHistoryEntity>().Property(e => e.Provider).HasMaxLength(64);
-            modelBuilder.Entity<SentHistoryEntity>().Property(e => e.ProcDate);
-            modelBuilder.Entity<SentHistoryEntity>().Property(e => e.ProcError).HasMaxLength(128);
-            modelBuilder.Entity<SentHistoryEntity>().Property(e => e.ClientId).HasMaxLength(64);
+            modelBuilder.Entity<SentHistoryRecord>().Property(e => e.MaskedPhone).HasMaxLength(32);
+            modelBuilder.Entity<SentHistoryRecord>().Property(e => e.Brand).HasMaxLength(64);
+            modelBuilder.Entity<SentHistoryRecord>().Property(e => e.Template).HasMaxLength(64);
+            modelBuilder.Entity<SentHistoryRecord>().Property(e => e.Provider).HasMaxLength(64);
+            modelBuilder.Entity<SentHistoryRecord>().Property(e => e.ProcDate);
+            modelBuilder.Entity<SentHistoryRecord>().Property(e => e.ProcError).HasMaxLength(1280);
+            modelBuilder.Entity<SentHistoryRecord>().Property(e => e.ClientId).HasMaxLength(64);
 
             base.OnModelCreating(modelBuilder);
         }
 
-        public async Task<int> UpsetAsync(IEnumerable<SentHistoryEntity> entities)
+        public async Task<int> UpsetAsync(IEnumerable<SentHistoryRecord> entities)
         {
             var result = await SentHistory.UpsertRange(entities).On(e => e.Id).NoUpdate().RunAsync();
             return result;

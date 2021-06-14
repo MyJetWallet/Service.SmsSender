@@ -82,14 +82,22 @@ namespace Service.SmsSender.Services
             return response;
         }
 
-        public async Task<IEnumerable<SentHistoryEntity>> GetSentHistoryAsync(int count, int since)
+        public async Task<List<SentHistoryRecord>> GetSentHistoryAsync(int count, int since)
         {
             try
             {
                 await using var context = new SmsSenderDbContext(_dbContextOptionsBuilder.Options);
-                return since > 0
-                    ? context.SentHistory.AsEnumerable().Where(s => s.Id < since).TakeLast(count)
-                    : context.SentHistory.AsEnumerable().TakeLast(count);
+
+                if (since > 0)
+                {
+                    var data = await context.SentHistory.Where(s => s.Id < since).OrderByDescending(e => e.Id).Take(count).ToListAsync();
+                    return data;
+                }
+                else
+                {
+                    var data = await context.SentHistory.OrderByDescending(e => e.Id).Take(count).ToListAsync();
+                    return data;
+                }
             }
             catch (Exception e)
             {
@@ -154,7 +162,7 @@ namespace Service.SmsSender.Services
             try
             {
                 await using var context = new SmsSenderDbContext(_dbContextOptionsBuilder.Options);
-                var dbResult = await context.SentHistory.AddAsync(new SentHistoryEntity(record));
+                var dbResult = await context.SentHistory.AddAsync(record);
                 await context.SaveChangesAsync();
                 return dbResult.Entity.Id.ToString();
             }

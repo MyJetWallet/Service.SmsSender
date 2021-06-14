@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Service.SmsSender.Postgres.Migrations
 {
-    public partial class ver_0 : Migration
+    public partial class version_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,7 +23,7 @@ namespace Service.SmsSender.Postgres.Migrations
                     Template = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     Provider = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     ProcDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    ProcError = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    ProcError = table.Column<string>(type: "character varying(1280)", maxLength: 1280, nullable: true),
                     ClientId = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true)
                 },
                 constraints: table =>

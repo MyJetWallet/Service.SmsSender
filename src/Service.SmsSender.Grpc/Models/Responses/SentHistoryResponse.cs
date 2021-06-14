@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Service.SmsSender.Domain.Models;
 
 namespace Service.SmsSender.Grpc.Models.Responses
@@ -7,6 +8,6 @@ namespace Service.SmsSender.Grpc.Models.Responses
     public class SentHistoryResponse
     {
         [DataMember(Order = 1)]
-        public SentHistoryRecord[] SentHistoryRecords { get; set; }
+        public List<SentHistoryRecord> SentHistoryRecords { get; set; }
     }
 }

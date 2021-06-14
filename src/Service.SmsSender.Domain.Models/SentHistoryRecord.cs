@@ -23,6 +23,10 @@ namespace Service.SmsSender.Domain.Models
         {
         }
 
+        public SentHistoryRecord()
+        {
+        }
+
         [DataMember(Order = 1)]
         public string MaskedPhone { get; set; }
 
@@ -43,5 +47,18 @@ namespace Service.SmsSender.Domain.Models
 
         [DataMember(Order = 8)]
         public string? ClientId { get; set; }
+
+        [DataMember(Order = 9)]
+        public long Id { get; set; }
+
+        public static SentHistoryRecord Create(SentHistoryRecord record)
+        {
+            return new SentHistoryRecord(record.MaskedPhone, record.Brand, record.Template, record.Provider,
+                record.ProcDate, record.ProcError, record.ClientId)
+            {
+                MaskedPhone = record.MaskedPhone,
+                Id = record.Id
+            };
+        }
     }
 }
