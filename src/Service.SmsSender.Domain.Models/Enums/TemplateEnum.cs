@@ -3,6 +3,7 @@
     public enum TemplateEnum
     {
         LogInSuccess,
-        TradeMade
+        TradeMade,
+        Verification
     }
 }

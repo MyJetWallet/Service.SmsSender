@@ -71,6 +71,26 @@ namespace Service.SmsSender.Services
             };
         }
 
+        public async Task<SendResponse> SendVerificationAsync(SendVerificationRequest request)
+        {
+            var templateBody = await SendMessageAsync(request);
+            if (templateBody != null)
+            {
+                var smsBody = templateBody
+                    .Replace("${CODE}", request.Code);
+
+                await _smsProviderManager.SendSmsAsync(request.Phone, request.Brand, smsBody, TemplateEnum.Verification);
+
+                return new SendResponse { Result = SmsSendResult.OK };
+            }
+
+            return new SendResponse
+            {
+                Result = SmsSendResult.TEMPLATE_NOT_FOUND,
+                ErrorMessage = "Template doesn't exist."
+            };
+        }
+
         public async Task<SentHistoryResponse> GetSentHistoryAsync(GetSentHistoryRequest request)
         {
             var maxCount = request.MaxCount > 0 ? request.MaxCount : 20;

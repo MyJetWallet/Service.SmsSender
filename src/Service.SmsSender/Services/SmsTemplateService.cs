@@ -21,12 +21,14 @@ namespace Service.SmsSender.Services
         private readonly IDictionary<TemplateEnum, string> _defaultBrandLangBodies = new Dictionary<TemplateEnum, string>
         {
             { TemplateEnum.LogInSuccess, "Successful log in account from IP ${IP} (${DATE})" },
-            { TemplateEnum.TradeMade, "Trade made: ${SYMBOL}, price ${PRICE}, volume ${VOLUME}" }
+            { TemplateEnum.TradeMade, "Trade made: ${SYMBOL}, price ${PRICE}, volume ${VOLUME}" },
+            { TemplateEnum.Verification, "Your verification code: ${CODE}"}
         };
         private readonly IDictionary<TemplateEnum, List<string>> _templateBodyParams = new Dictionary<TemplateEnum, List<string>>
         {
             { TemplateEnum.LogInSuccess, new List<string> { "${IP}", "${DATE}" } },
-            { TemplateEnum.TradeMade, new List<string> { "${SYMBOL}", "${PRICE}", "${VOLUME}" } }
+            { TemplateEnum.TradeMade, new List<string> { "${SYMBOL}", "${PRICE}", "${VOLUME}" } },
+            { TemplateEnum.Verification, new List<string> { "${CODE}" } }
         };
 
         public SmsTemplateService(ILogger<SmsProviderService> logger, IMyNoSqlServerDataWriter<TemplateMyNoSqlEntity> templateWriter)
