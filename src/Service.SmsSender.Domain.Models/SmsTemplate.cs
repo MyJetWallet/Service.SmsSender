@@ -12,7 +12,7 @@ namespace Service.SmsSender.Domain.Models
         public TemplateEnum Id { get; set; }
 
         [DataMember(Order = 2)]
-        public LangEnum DefaultLang { get; set; }
+        public string DefaultLang { get; set; }
 
         [DataMember(Order = 3)]
         public string DefaultBrand { get; set; }

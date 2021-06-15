@@ -18,6 +18,8 @@ namespace Service.SmsSender.Services
     {
         private readonly ILogger<SmsProviderService> _logger;
         private readonly IMyNoSqlServerDataWriter<TemplateMyNoSqlEntity> _templateWriter;
+        private const string _defaultBrand = "DefaultBrand";
+        private const string _defaultLang = "En";
         private readonly IDictionary<TemplateEnum, string> _defaultBrandLangBodies = new Dictionary<TemplateEnum, string>
         {
             { TemplateEnum.LogInSuccess, "Successful log in account from IP ${IP} (${DATE})" },
@@ -37,12 +39,10 @@ namespace Service.SmsSender.Services
             _templateWriter = templateWriter;
         }
 
-        public async Task<TemplateListResponse> GetAllTemplatesAsync()
+        public async Task CreateDefaultTemplatesAsync()
         {
             var templateEntities = (await _templateWriter.GetAsync())?.ToArray();
             var templateIds = Enum.GetValues(typeof(TemplateEnum)).Cast<TemplateEnum>();
-            var templates = new List<SmsTemplate>();
-            
             foreach (var templateId in templateIds)
             {
                 var template = templateEntities?.FirstOrDefault(e => e.Template.Id == templateId)?.Template;
@@ -51,8 +51,8 @@ namespace Service.SmsSender.Services
                     template = new SmsTemplate
                     {
                         Id = templateId,
-                        DefaultLang = LangEnum.En,
-                        DefaultBrand = "DefaultBrand",
+                        DefaultLang = _defaultLang,
+                        DefaultBrand = _defaultBrand,
                         BrandLangBodies = GetTemplateLangBodies(templateId),
                         Params = GetTemplateBodyParams(templateId)
                     };
@@ -62,13 +62,16 @@ namespace Service.SmsSender.Services
 
                     _logger.LogInformation("Template (ID: {templateId}) doesn't exist, creating the new one.", templateId);
                 }
-
-                templates.Add(template);
             }
+        }
+        public async Task<TemplateListResponse> GetAllTemplatesAsync()
+        {
+            var templateEntities = (await _templateWriter.GetAsync())?.ToArray();
+            var templateIds = Enum.GetValues(typeof(TemplateEnum)).Cast<TemplateEnum>();
 
             return new TemplateListResponse
             {
-                Templates = templates.ToArray()
+                Templates = templateIds.Select(templateId => templateEntities?.FirstOrDefault(e => e.Template.Id == templateId)?.Template).ToArray()
             };
         }
 
@@ -155,13 +158,14 @@ namespace Service.SmsSender.Services
 
         private BrandLangBody[] GetTemplateLangBodies(TemplateEnum templateId)
         {
-            var langs = Enum.GetValues(typeof(LangEnum)).Cast<LangEnum>();
-
             return new[] {
                 new BrandLangBody
                 {
-                    Brand = "DefaultBrand",
-                    LangBodies = langs.ToDictionary(lang => lang.ToString(), lang => _defaultBrandLangBodies[templateId])
+                    Brand = _defaultBrand,
+                    LangBodies = new Dictionary<string, string>()
+                    {
+                        {_defaultLang, _defaultBrandLangBodies[templateId]}   
+                    }
                 }
             };
         }

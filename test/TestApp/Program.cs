@@ -23,7 +23,7 @@ namespace TestApp
             {
                 Phone = "+380974593496",
                 Brand = "BlahBlahBrand",
-                Lang = LangEnum.En,
+                Lang = "En",
                 Ip = "127.0.0.1",
                 Date = DateTime.Now
             });
@@ -34,13 +34,24 @@ namespace TestApp
             {
                 Phone = "+380974593496",
                 Brand = "BlahBlahBrand",
-                Lang = LangEnum.En,
+                Lang = "En",
                 Symbol = "BTC/USD",
                 Volume = 1,
                 Price = 38000
             });
-
+            
             Console.WriteLine($"Status: {resp2?.Result}, Error message: {resp2?.ErrorMessage}");
+
+
+            var resp3 = await client.SendVerificationAsync(new SendVerificationRequest()
+            {
+                Phone = "+380974593496",
+                Brand = "BlahBlahBrand",
+                Lang = "En",
+                Code = "0000",
+            });
+            Console.WriteLine($"Status: {resp3?.Result}, Error message: {resp3?.ErrorMessage}");
+
 
             Console.WriteLine("End");
             Console.ReadLine();

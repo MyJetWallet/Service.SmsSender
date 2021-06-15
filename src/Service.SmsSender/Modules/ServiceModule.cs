@@ -16,6 +16,11 @@ namespace Service.SmsSender.Modules
                 .AutoActivate()
                 .SingleInstance();
 
+            builder
+                .RegisterType<SmsTemplateService>()
+                .AsSelf()
+                .SingleInstance();
+
             var providerRouterWriter = new MyNoSqlServerDataWriter<ProviderRouteMyNoSqlEntity>(Program.ReloadedSettings(s => s.MyNoSqlWriterUrl), ProviderRouteMyNoSqlEntity.TableName, true);
             builder
                 .RegisterInstance(providerRouterWriter)

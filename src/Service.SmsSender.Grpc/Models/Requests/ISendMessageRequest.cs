@@ -8,6 +8,8 @@ namespace Service.SmsSender.Grpc.Models.Requests
 
         string Brand { get; set; }
 
-        LangEnum Lang { get; set; }
+        string Lang { get; set; }
+        
+        TemplateEnum Type { get; }
     }
 }

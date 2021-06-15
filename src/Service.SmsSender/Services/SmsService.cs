@@ -105,7 +105,7 @@ namespace Service.SmsSender.Services
         private async Task<string> SendMessageAsync<T>(T request) where T : ISendMessageRequest
         {
             var partitionKey = TemplateMyNoSqlEntity.GeneratePartitionKey();
-            var rowKey = TemplateMyNoSqlEntity.GenerateRowKey(TemplateEnum.LogInSuccess.ToString());
+            var rowKey = TemplateMyNoSqlEntity.GenerateRowKey(request.Type.ToString());
 
             var templateEntity = await _templateWriter.GetAsync(partitionKey, rowKey);
             if (templateEntity == null)
@@ -133,12 +133,12 @@ namespace Service.SmsSender.Services
                 }
             }
 
-            if (!brandLangBodies.LangBodies.TryGetValue(request.Lang.ToString(), out var templateBody))
+            if (!brandLangBodies.LangBodies.TryGetValue(request.Lang, out var templateBody))
             {
                 _logger.LogInformation("Template (ID: {templateId}) for brand {brand} with lang {lang} doesn't exist, switch to the default lang ({defaultLang}).",
                     templateEntity.Template.Id, brand, request.Lang, templateEntity.Template.DefaultLang);
 
-                if (!brandLangBodies.LangBodies.TryGetValue(templateEntity.Template.DefaultLang.ToString(), out templateBody))
+                if (!brandLangBodies.LangBodies.TryGetValue(templateEntity.Template.DefaultLang, out templateBody))
                 {
                     _logger.LogError("Template (ID: {templateId}) for the default lang ({defaultLang}) doesn't exist.",
                         templateEntity.Template.Id, templateEntity.Template.DefaultLang);

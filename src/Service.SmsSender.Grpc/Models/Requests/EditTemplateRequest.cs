@@ -13,13 +13,13 @@ namespace Service.SmsSender.Grpc.Models.Requests
         public string Brand { get; set; }
 
         [DataMember(Order = 3)]
-        public LangEnum Lang { get; set; }
+        public string Lang { get; set; }
 
         [DataMember(Order = 4)]
         public string DefaultBrand { get; set; }
 
         [DataMember(Order = 5)]
-        public LangEnum DefaultLang { get; set; }
+        public string DefaultLang { get; set; }
 
         [DataMember(Order = 6)]
         public string TemplateBody { get; set; }
