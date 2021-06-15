@@ -13,5 +13,8 @@ namespace Service.SmsSender.Grpc
 
         [OperationContract]
         Task<SendResponse> EditTemplateAsync(EditTemplateRequest request);
+        
+        [OperationContract]
+        Task<SendResponse> DeleteBodyAsync(EditTemplateRequest request);
     }
 }

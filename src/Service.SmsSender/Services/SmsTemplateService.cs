@@ -156,6 +156,34 @@ namespace Service.SmsSender.Services
             return new SendResponse { Result = SmsSendResult.OK };
         }
 
+        public async Task<SendResponse> DeleteBodyAsync(EditTemplateRequest request)
+        {
+            var partitionKey = TemplateMyNoSqlEntity.GeneratePartitionKey();
+            var rowKey = TemplateMyNoSqlEntity.GenerateRowKey(request.TemplateId.ToString());
+
+            var templateEntity = await _templateWriter.GetAsync(partitionKey, rowKey);
+            if (templateEntity == null)
+            {
+                _logger.LogError("Template with part.key {partitionKey} & row key {rowKey} doesn't exist.", partitionKey, rowKey);
+
+                return new SendResponse
+                {
+                    Result = SmsSendResult.TEMPLATE_NOT_FOUND,
+                    ErrorMessage = "Template doesn't exist."
+                };
+            }
+
+            templateEntity.Template.BrandLangBodies.First(b => b.Brand == request.Brand).LangBodies
+                .Remove(request.Lang);
+            if (!templateEntity.Template.BrandLangBodies.First(b => b.Brand == request.Brand).LangBodies.Any())
+            {
+                templateEntity.Template.BrandLangBodies = templateEntity.Template.BrandLangBodies
+                    .Where(b => b.Brand != request.Brand).ToArray();
+            }
+            await _templateWriter.InsertOrReplaceAsync(templateEntity);
+            return new SendResponse { Result = SmsSendResult.OK };
+        }
+
         private BrandLangBody[] GetTemplateLangBodies(TemplateEnum templateId)
         {
             return new[] {
