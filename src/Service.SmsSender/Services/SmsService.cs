@@ -140,10 +140,18 @@ namespace Service.SmsSender.Services
 
                 if (!brandLangBodies.LangBodies.TryGetValue(templateEntity.Template.DefaultLang, out templateBody))
                 {
-                    _logger.LogError("Template (ID: {templateId}) for the default lang ({defaultLang}) doesn't exist.",
-                        templateEntity.Template.Id, templateEntity.Template.DefaultLang);
+                    _logger.LogInformation("Template (ID: {templateId}) for the default lang ({defaultLang}) doesn't exist. Switching to  default brand ({defaultBrand}) and default lang ({defaultLang})",
+                        templateEntity.Template.Id, templateEntity.Template.DefaultBrand, templateEntity.Template.DefaultLang);
 
-                    return null;
+                    var defaultBrandLangBodies = templateEntity.Template.BrandLangBodies.FirstOrDefault(b => b.Brand == templateEntity.Template.DefaultBrand);
+                    if (!defaultBrandLangBodies.LangBodies.TryGetValue(templateEntity.Template.DefaultLang, out templateBody))
+                    {
+                        _logger.LogError(
+                            "Template (ID: {templateId}) for the default brand ({defaultBrand}) and default lang ({defaultLang}) doesn't exist.",
+                            templateEntity.Template.Id, templateEntity.Template.DefaultBrand,
+                            templateEntity.Template.DefaultLang);
+                        return null;
+                    }
                 }
             }
 
