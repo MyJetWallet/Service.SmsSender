@@ -142,6 +142,8 @@ namespace Service.SmsSender.Services
 
                     brandLangBodies.LangBodies.Add(lang, request.TemplateBody);
                 }
+
+                brandLangBodies.LangBodies[lang] = request.TemplateBody;
             }
             
             if (!string.IsNullOrEmpty(request.DefaultBrand))
