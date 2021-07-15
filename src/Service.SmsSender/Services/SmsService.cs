@@ -133,24 +133,31 @@ namespace Service.SmsSender.Services
                 }
             }
 
-            if (!brandLangBodies.LangBodies.TryGetValue(request.Lang, out var templateBody))
+            if (!brandLangBodies.LangBodies.TryGetValue(request.Lang, out var templateBody)) //set brand, set lang
             {
                 _logger.LogInformation("Template (ID: {templateId}) for brand {brand} with lang {lang} doesn't exist, switch to the default lang ({defaultLang}).",
                     templateEntity.Template.Id, brand, request.Lang, templateEntity.Template.DefaultLang);
 
-                if (!brandLangBodies.LangBodies.TryGetValue(templateEntity.Template.DefaultLang, out templateBody))
+                if (!brandLangBodies.LangBodies.TryGetValue(templateEntity.Template.DefaultLang, out templateBody)) //set brand, default lang 
                 {
                     _logger.LogInformation("Template (ID: {templateId}) for the default lang ({defaultLang}) doesn't exist. Switching to  default brand ({defaultBrand}) and default lang ({defaultLang})",
                         templateEntity.Template.Id, templateEntity.Template.DefaultBrand, templateEntity.Template.DefaultLang);
 
                     var defaultBrandLangBodies = templateEntity.Template.BrandLangBodies.FirstOrDefault(b => b.Brand == templateEntity.Template.DefaultBrand);
-                    if (!defaultBrandLangBodies.LangBodies.TryGetValue(templateEntity.Template.DefaultLang, out templateBody))
+                    if(!defaultBrandLangBodies.LangBodies.TryGetValue(request.Lang, out templateBody)) //default brand, set lang
                     {
-                        _logger.LogError(
-                            "Template (ID: {templateId}) for the default brand ({defaultBrand}) and default lang ({defaultLang}) doesn't exist.",
-                            templateEntity.Template.Id, templateEntity.Template.DefaultBrand,
-                            templateEntity.Template.DefaultLang);
-                        return null;
+                        _logger.LogInformation("Template (ID: {templateId}) for defaultBrand {defaultBrand} with lang {lang} doesn't exist, switch to the default lang ({defaultLang}).",
+                            templateEntity.Template.Id, templateEntity.Template.DefaultBrand, request.Lang, templateEntity.Template.DefaultLang);
+                        
+                        if (!defaultBrandLangBodies.LangBodies.TryGetValue(templateEntity.Template.DefaultLang,
+                            out templateBody)) //default brand, default lang
+                        {
+                            _logger.LogError(
+                                "Template (ID: {templateId}) for the default brand ({defaultBrand}) and default lang ({defaultLang}) doesn't exist.",
+                                templateEntity.Template.Id, templateEntity.Template.DefaultBrand,
+                                templateEntity.Template.DefaultLang);
+                            return null;
+                        }
                     }
                 }
             }
