@@ -126,7 +126,7 @@ namespace Service.SmsSender.Services
                 brandLangBodies = templateEntity.Template.BrandLangBodies.FirstOrDefault(b => b.Brand == brand);
                 if (brandLangBodies == null)
                 {
-                    _logger.LogInformation("Template (ID: {templateId}) for default brand ({defaultBrand}) doesn't exist.",
+                    _logger.LogInformation("Template (ID: {templateId}, lang: {lang}) for default brand ({defaultBrand}) doesn't exist.",
                         templateEntity.Template.Id, request.Lang, brand);
 
                     return null;
@@ -140,8 +140,8 @@ namespace Service.SmsSender.Services
 
                 if (!brandLangBodies.LangBodies.TryGetValue(templateEntity.Template.DefaultLang, out templateBody)) //set brand, default lang 
                 {
-                    _logger.LogInformation("Template (ID: {templateId}) for the default lang ({defaultLang}) doesn't exist. Switching to  default brand ({defaultBrand}) and default lang ({defaultLang})",
-                        templateEntity.Template.Id, templateEntity.Template.DefaultBrand, templateEntity.Template.DefaultLang);
+                    _logger.LogInformation("Template (ID: {templateId}) for the default lang ({defaultLang}) doesn't exist. Switching to  default brand ({defaultBrand}) and default lang",
+                        templateEntity.Template.Id, templateEntity.Template.DefaultLang, templateEntity.Template.DefaultBrand);
 
                     var defaultBrandLangBodies = templateEntity.Template.BrandLangBodies.FirstOrDefault(b => b.Brand == templateEntity.Template.DefaultBrand);
                     if(!defaultBrandLangBodies.LangBodies.TryGetValue(request.Lang, out templateBody)) //default brand, set lang

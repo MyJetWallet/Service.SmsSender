@@ -20,7 +20,7 @@ namespace Service.SmsSender
         protected override void OnStarted()
         {
             _logger.LogInformation("OnStarted has been called.");
-            _templateService.CreateDefaultTemplatesAsync();
+            _templateService.CreateDefaultTemplatesAsync().GetAwaiter().GetResult();
         }
 
         protected override void OnStopping()
