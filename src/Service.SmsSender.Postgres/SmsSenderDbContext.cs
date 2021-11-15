@@ -2,11 +2,12 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MyJetWallet.Sdk.Postgres;
 using Service.SmsSender.Domain.Models;
 
 namespace Service.SmsSender.Postgres
 {
-    public class SmsSenderDbContext : DbContext
+    public class SmsSenderDbContext : MyDbContext
     {
         public const string Schema = "smssender";
 
@@ -14,18 +15,8 @@ namespace Service.SmsSender.Postgres
 
         public DbSet<SentHistoryRecord> SentHistory { get; set; }
 
-        public static ILoggerFactory LoggerFactory { get; set; }
-
         public SmsSenderDbContext(DbContextOptions options) : base(options)
         {
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (LoggerFactory != null)
-            {
-                optionsBuilder.UseLoggerFactory(LoggerFactory).EnableSensitiveDataLogging();
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
