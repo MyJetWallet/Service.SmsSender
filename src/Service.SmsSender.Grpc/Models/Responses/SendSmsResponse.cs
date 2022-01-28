@@ -13,5 +13,8 @@ namespace Service.SmsSender.Grpc.Models.Responses
 
         [DataMember(Order = 3)]
         public string ReturnedId { get; set; }
+        
+        [DataMember(Order = 4)]
+        public string MessageId { get; set; }
     }
 }

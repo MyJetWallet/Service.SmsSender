@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Service.SmsSender.Postgres;
@@ -11,9 +12,10 @@ using Service.SmsSender.Postgres;
 namespace Service.SmsSender.Postgres.Migrations
 {
     [DbContext(typeof(SmsSenderDbContext))]
-    partial class SmsSenderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220128091050_RecordRetryFields")]
+    partial class RecordRetryFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

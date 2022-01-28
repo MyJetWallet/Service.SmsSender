@@ -23,6 +23,12 @@ namespace Service.SmsSender.Settings
         
         [YamlProperty("SmsSender.PostgresConnectionString")]
         public string PostgresConnectionString { get; set; }
+        
+        [YamlProperty("SmsSender.RetryCount")]
+        public int RetryCount { get; set; }
+        
+        [YamlProperty("SmsSender.SpotServiceBusHostPort")]
+        public string SpotServiceBusHostPort { get; set; }
     }
 
     public class SmsProvider

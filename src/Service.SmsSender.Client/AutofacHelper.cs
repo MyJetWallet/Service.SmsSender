@@ -1,4 +1,7 @@
 ﻿using Autofac;
+using MyJetWallet.Sdk.ServiceBus;
+using MyServiceBus.TcpClient;
+using Service.SmsSender.Domain.Models;
 using Service.SmsSender.Grpc;
 
 // ReSharper disable UnusedMember.Global
@@ -20,6 +23,12 @@ namespace Service.SmsSender.Client
             
             builder.RegisterInstance(factory.GetSmsProviderService()).As<ISmsProviderService>().SingleInstance();
             builder.RegisterInstance(factory.GetSmsTemplateService()).As<ISmsTemplateService>().SingleInstance();
+        }
+        
+        public static void RegisterNexmoReportMessagePublisher(this ContainerBuilder builder,
+            MyServiceBusTcpClient client )
+        {
+            builder.RegisterMyServiceBusPublisher<SmsDeliveryMessage>(client, SmsDeliveryMessage.TopicName, true);
         }
     }
 }

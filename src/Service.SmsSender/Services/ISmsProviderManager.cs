@@ -11,7 +11,7 @@ namespace Service.SmsSender.Services
     {
         string[] GetAllProviderNames();
 
-        Task<SendSmsResponse> SendSmsAsync(string phone, string brand, string smsBody, TemplateEnum template);
+        Task<SendSmsResponse> SendSmsAsync(string phone, string brand, string smsBody, TemplateEnum template, string retryId = null, int retryCount = 0);
 
         Task<List<SentHistoryRecord>> GetSentHistoryAsync(int count, int since);
     }

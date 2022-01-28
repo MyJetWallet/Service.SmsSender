@@ -44,12 +44,15 @@ namespace Service.SmsSender.Services
 
         public string[] GetAllProviderNames() => Program.Settings.SmsProviders.Select(p => p.Key).ToArray();
 
-        public async Task<SendSmsResponse> SendSmsAsync(string phone, string brand, string smsBody, TemplateEnum template)
+        public async Task<SendSmsResponse> SendSmsAsync(string phone, string brand, string smsBody, TemplateEnum template, string retryId = null, int retryCount = 0)
         {
             var providerName = await SelectProviderByPhone(phone);
             var provider = GetProviderByName(providerName);
             var response = new SendSmsResponse();
 
+            if (string.IsNullOrEmpty(retryId))
+                retryId = Guid.NewGuid().ToString("N");
+            
             if (provider != null)
             {
                 var request = new SendSmsRequest
@@ -58,19 +61,23 @@ namespace Service.SmsSender.Services
                     Body = smsBody
                 };
 
-                var record = new SentHistoryRecord(phone, brand, template, providerName, DateTime.Now);
+                var record = new SentHistoryRecord(phone, brand, template, providerName, DateTime.Now, retryId, MessageStatus.New, retryCount);
 
                 response = await provider.SendSmsAsync(request);
 
+                record.ExternalMessageId = response.MessageId;
+                
                 if (!response.Status)
                 {
                     record.ProcError = response.ErrorMessage;
+                    record.Status = MessageStatus.Failed;
                 }
                 else if (!string.IsNullOrEmpty(response.ReturnedId)) // threat ID returned from provider as ClientID
                 {
                     record.ClientId = response.ReturnedId;
                 }
 
+                record.Status = MessageStatus.Sent;
                 response.ReturnedId = await SaveSentHistoryRecord(record); // fill ReturnedID field with stored record ID value
             }
             else
@@ -81,6 +88,7 @@ namespace Service.SmsSender.Services
 
             return response;
         }
+        
 
         public async Task<List<SentHistoryRecord>> GetSentHistoryAsync(int count, int since)
         {
