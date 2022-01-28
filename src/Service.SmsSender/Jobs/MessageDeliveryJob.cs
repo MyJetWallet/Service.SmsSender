@@ -37,11 +37,11 @@ namespace Service.SmsSender.Jobs
                 case DeliveryStatus.Failed:
                     record.Status = MessageStatus.Failed;
                     record.RetryCount++;
-
-                    if (record.RetryCount <= Program.Settings.RetryCount)
-                    {
-                        //TODO: retry sms
-                    }
+                    //
+                    // if (record.RetryCount <= Program.Settings.RetryCount)
+                    // {
+                    //     //TODO: retry sms
+                    // }
                     break;
             }
          
