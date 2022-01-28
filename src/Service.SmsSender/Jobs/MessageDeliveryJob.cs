@@ -37,11 +37,20 @@ namespace Service.SmsSender.Jobs
                 case DeliveryStatus.Failed:
                     record.Status = MessageStatus.Failed;
                     record.RetryCount++;
-                    //
-                    // if (record.RetryCount <= Program.Settings.RetryCount)
-                    // {
-                    //     //TODO: retry sms
-                    // }
+                    
+                    if (record.RetryCount <= Program.Settings.RetryCount)
+                    {
+                        var cachedMessage = MessageCacheManager.GetMessage(record.RetryId);
+                        if(cachedMessage != null)
+                        {
+                            await _smsProviderManager.SendSmsAsync(cachedMessage.Phone, cachedMessage.Brand,
+                                cachedMessage.SmsBody, cachedMessage.Template, record.RetryId, record.RetryCount);
+                        }
+                    }
+                    else
+                    {
+                        MessageCacheManager.DeleteMessage(record.RetryId);
+                    }
                     break;
             }
          

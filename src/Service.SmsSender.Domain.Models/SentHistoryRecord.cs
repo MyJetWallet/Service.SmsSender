@@ -55,7 +55,7 @@ namespace Service.SmsSender.Domain.Models
         public long Id { get; set; }
         
         [DataMember(Order = 10)]
-        public string ExternalMessageId { get; set; }
+        public string? ExternalMessageId { get; set; }
         [DataMember(Order = 11)]
         public string RetryId { get; set; }
         [DataMember(Order = 12)]

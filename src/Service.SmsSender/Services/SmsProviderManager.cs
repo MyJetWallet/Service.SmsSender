@@ -55,6 +55,16 @@ namespace Service.SmsSender.Services
             
             if (provider != null)
             {
+                MessageCacheManager.AddMessage(new CachedMessage
+                {
+                    RetryId = retryId,
+                    Timestamp = DateTime.UtcNow,
+                    Phone = phone,
+                    Brand = brand,
+                    SmsBody = smsBody,
+                    Template = template
+                });
+                
                 var request = new SendSmsRequest
                 {
                     Phone = phone,
