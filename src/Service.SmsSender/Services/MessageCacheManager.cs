@@ -8,7 +8,7 @@ namespace Service.SmsSender.Services
 {
     public static class MessageCacheManager
     {
-        private static List<CachedMessage> _messages;
+        private static List<CachedMessage> _messages = new List<CachedMessage>();
         private const int MaxCacheSize = 1000;
 
         public static void AddMessage(CachedMessage message)
