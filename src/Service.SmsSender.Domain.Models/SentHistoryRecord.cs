@@ -25,6 +25,12 @@ namespace Service.SmsSender.Domain.Models
             : this(phone, brand, template.ToString(), provider, procDate, retryId, status, retryCount, procError, clientId)
         {
         }
+        
+        public SentHistoryRecord(string phone, string brand, string template, string provider, DateTime procDate, string retryId, MessageStatus status, int retryCount, string externalMessageId,string? procError = null, string? clientId = null)
+            : this(phone, brand, template, provider, procDate, retryId, status, retryCount, procError, clientId)
+        {
+            ExternalMessageId = externalMessageId;
+        }
 
         public SentHistoryRecord()
         {
@@ -65,7 +71,7 @@ namespace Service.SmsSender.Domain.Models
         public static SentHistoryRecord Create(SentHistoryRecord record)
         {
             return new SentHistoryRecord(record.MaskedPhone, record.Brand, record.Template, record.Provider,
-                record.ProcDate, record.RetryId, record.Status, record.RetryCount, record.ProcError, record.ClientId)
+                record.ProcDate, record.RetryId, record.Status, record.RetryCount, record.ExternalMessageId ?? String.Empty, record.ProcError, record.ClientId)
             {
                 MaskedPhone = record.MaskedPhone,
                 Id = record.Id

@@ -40,7 +40,7 @@ namespace Service.SmsSender.Postgres
 
         public async Task<int> UpsetAsync(IEnumerable<SentHistoryRecord> entities)
         {
-            var result = await SentHistory.UpsertRange(entities).On(e => e.Id).NoUpdate().RunAsync();
+            var result = await SentHistory.UpsertRange(entities).On(e => e.Id).AllowIdentityMatch().RunAsync();
             return result;
         }
     }
